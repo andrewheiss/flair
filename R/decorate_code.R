@@ -56,7 +56,15 @@ decorate_code <- function(text, ...) {
 
   }
 
-  my_code_fenced <- paste0("```{r}\n", text, "\n```")
+  # Build chunk header with user-provided chunk options
+  user_opts <- list(...)
+
+  if (length(user_opts) > 0) {
+    opts_string <- toString(list_to_strings(user_opts))
+    my_code_fenced <- paste0("```{r, ", opts_string, "}\n", text, "\n```")
+  } else {
+    my_code_fenced <- paste0("```{r}\n", text, "\n```")
+  }
 
   if (is_live) {
 
