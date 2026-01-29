@@ -187,12 +187,10 @@ src_to_list <- function(knitted) {
     split_sandwiches("```\\s*[A-Za-z]*") %>%
     as.list()
 
-  before_code <- which(stringr::str_detect(knitted, "```\\s*[A-Za-z]*"))
-
-  knitted[before_code + 1] <- stringr::str_trim(knitted[before_code + 1])
+  before_code <- which(stringr::str_detect(knitted, "```\\s*[A-Za-z]+"))
 
   knitted[before_code + 1] <- purrr::map(knitted[before_code + 1],
-                                         as_decorated_source)
+                                         ~as_decorated_source(stringr::str_trim(.x)))
 
   knitted <- knitted[-c(before_code, before_code + 2)]
 
