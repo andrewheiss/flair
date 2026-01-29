@@ -184,10 +184,10 @@ decorate_chunk <- function(chunk_name,
 src_to_list <- function(knitted) {
 
   knitted <- knitted %>%
-    split_sandwiches("```[A-z]*") %>%
+    split_sandwiches("```\\s*[A-Za-z]*") %>%
     as.list()
 
-  before_code <- which(stringr::str_detect(knitted, "```[A-z]+"))
+  before_code <- which(stringr::str_detect(knitted, "```\\s*[A-Za-z]*"))
 
   knitted[before_code + 1] <- stringr::str_trim(knitted[before_code + 1])
 
